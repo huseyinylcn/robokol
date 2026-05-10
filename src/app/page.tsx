@@ -1,66 +1,86 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import { useState } from "react";
+import "./control-panel.css";
 
 export default function Home() {
+  const [ipAddress, setIpAddress] = useState("192.168.1.100");
+  const [status, setStatus] = useState("Hazır (Ready)");
+
+  const sendCommand = async (queryString: string, label: string) => {
+    setStatus(`${label} komutu gönderiliyor...`);
+    try {
+      // url oluştururken doğrudan IP adresinin sonuna queryString ekliyoruz
+      // Örn: http://192.168.1.100/?11=90&12=120&13=20&14=90&15=160
+      const url = `http://${ipAddress}${queryString}`;
+      
+      await fetch(url, { method: "GET", mode: "no-cors" });
+      
+      setStatus(`${label} başarıyla gönderildi!`);
+      
+      setTimeout(() => {
+        setStatus("Hazır (Ready)");
+      }, 3000);
+    } catch (error) {
+      console.error(error);
+      setStatus(`Hata: ${label} komutu gönderilemedi.`);
+    }
+  };
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="container">
+      <div className="glass-panel">
+        <div className="header">
+          <div className="status-indicator animate-pulse"></div>
+          <h1>Robot Kontrol Merkezi</h1>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className="ip-section">
+          <label htmlFor="ip-input">Robot IP Adresi</label>
+          <input
+            id="ip-input"
+            type="text"
+            value={ipAddress}
+            onChange={(e) => setIpAddress(e.target.value)}
+            className="ip-input"
+            placeholder="Örn: 192.168.1.100"
+          />
         </div>
-      </main>
+
+        <div className="buttons-grid">
+          <button
+            // Buradaki tırnak içindeki değerleri kendi motor açılarınıza göre değiştirebilirsiniz
+            onClick={() => sendCommand("/?11=90&12=120&13=20&14=90&15=160", "Bekleme Konumu")}
+            className="btn btn-primary"
+          >
+            <span className="btn-icon">⏳</span>
+            Bekleme Konumu
+          </button>
+
+          <button
+            // Çöpü Al için gereken açıları buraya yazabilirsiniz
+            onClick={() => sendCommand("/?11=90&12=70&13=130&14=140&15=60", "Çöpü Al")}
+            className="btn btn-success"
+          >
+            <span className="btn-icon">🦾</span>
+            Çöpü Al
+          </button>
+
+          <button
+            // Çöpü Bırak için gereken açıları buraya yazabilirsiniz
+            onClick={() => sendCommand("/?11=10&12=120&13=80&14=90&15=140", "Çöpü Bırak")}
+            className="btn btn-warning"
+          >
+            <span className="btn-icon">🗑️</span>
+            Çöpü Bırak
+          </button>
+        </div>
+
+        <div className="status-bar">
+          <span className="status-label">Sistem Durumu:</span>
+          <span className="status-text">{status}</span>
+        </div>
+      </div>
     </div>
   );
 }
