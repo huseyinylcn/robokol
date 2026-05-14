@@ -37,7 +37,7 @@ export default function Home() {
     await new Promise(resolve => setTimeout(resolve, 2000));
 
     // 2. İstek (Örn: Çöpü bırakmak için gripper'ı açma) - Bu açıları kendi sisteminize göre ayarlayın
-    await sendCommand("/?11=10&12=120&13=80&14=90&15=90", "Çöpü Bırak (2/2)");
+    await sendCommand("/?11=10&12=120&13=80&14=90&15=160", "Çöpü Bırak (2/2)");
   };
 
   return (
