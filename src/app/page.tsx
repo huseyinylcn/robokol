@@ -31,7 +31,7 @@ export default function Home() {
 
   const handleDropTrash = async () => {
     // 1. İstek (Örn: Çöpü bırakma konumuna gitme)
-    await sendCommand("/?11=10&12=70&13=130&14=90&15=60", "Çöpü Bırak (1/2)");
+    await sendCommand("/?11=90&12=120&13=130&14=90&15=60", "Çöpü Bırak (1/2)");
 
     // 2 saniye bekle
     await new Promise(resolve => setTimeout(resolve, 2000));
