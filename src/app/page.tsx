@@ -59,7 +59,7 @@ export default function Home() {
 
           <button
             // Çöpü Al için gereken açıları buraya yazabilirsiniz
-            onClick={() => sendCommand("/?11=90&12=70&13=130&14=140&15=60", "Çöpü Al")}
+            onClick={() => sendCommand("/?11=90&12=70&13=130&14=90&15=60", "Çöpü Al")}
             className="btn btn-success"
           >
             <span className="btn-icon">🦾</span>
