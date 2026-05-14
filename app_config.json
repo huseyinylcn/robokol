@@ -1,0 +1,45 @@
+{
+  "robot_base_url": "http://10.63.160.65",
+  "camera_url": "http://10.63.160.146:8080/video",
+  "camera_url_2": "http://10.63.160.97:8080/video",
+  "camera_stitch_horizontal": true,
+  "fixed_cameras": true,
+  "invert_base_turn": false,
+  "motor_ids": [11, 12, 13, 14, 15],
+  "trash_classes": ["bottle", "cup", "wine glass", "bowl"],
+  "optional_trash_classes": ["handbag"],
+  "zone_left_max": 0.4,
+  "zone_right_min": 0.6,
+  "close_area_ratio": 0.05,
+  "approach_timeout_sec": 12.0,
+  "grab_cy_norm_min": 0.3,
+  "lost_frames_threshold": 18,
+  "calibration_pulse_sec": 0.45,
+  "calibration_settle_sec": 0.35,
+  "calibration_confidence_threshold": 0.55,
+  "calibration_scene_top_ratio": 0.75,
+  "calibration_bidirectional": true,
+  "calibration_min_mean_flow": 0.4,
+  "calibration_http_retries": 3,
+  "detection_confidence_min": 0.38,
+  "detection_ignore_bottom_ratio": 0.2,
+  "show_calibration_preview": false,
+  "motor_map_path": "motor_map.json",
+  "grab_timings": {
+    "claw_open": 0.85,
+    "arm_down": 1.0,
+    "claw_close": 0.9,
+    "arm_up": 1.0
+  },
+  "bin_nav_sequence": [
+    ["turn_right", 1.2],
+    ["forward", 1.8],
+    ["stop", 0.1]
+  ],
+  "release_timings": {
+    "claw_open": 0.75
+  },
+  "yolo_model": "yolov8n.pt",
+  "inference_imgsz": 640,
+  "target_fps_smooth": 0.92
+}
